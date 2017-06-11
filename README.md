@@ -1,3 +1,7 @@
+# IMPORTANT NOTE
+
+This image is not yet ready for use!
+
 # Ampache Music Server
 
 This is a set of images that make it simple to serve up your
