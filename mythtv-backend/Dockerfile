@@ -4,8 +4,7 @@ RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 COPY setup/ /tmp/setup/
 RUN /tmp/setup/setup.sh
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive \
-      apt-get -y --no-install-recommends install mythtv-backend xmltv-util mythtv-database && \
+      apt-get -y --no-install-recommends install mythtv-backend xmltv-util && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN cd /var/www/html/ampache && \
