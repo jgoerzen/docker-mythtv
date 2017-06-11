@@ -1,14 +1,13 @@
-FROM jgoerzen/debian-base-apache-php:stretch
+FROM jgoerzen/debian-base-security:stretch
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
-RUN apt-get update && \
-    apt-get -y --no-install-recommends install php7.0-mysql php-xml \
-        php-json php-curl \
-        libav-tools ffmpeg php-gd git timidity && \
-    apt-get -y -u dist-upgrade && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY setup/ /tmp/setup/
 RUN /tmp/setup/setup.sh
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+      apt-get -y --no-install-recommends install mythtv-backend xmltv-util mythtv-database && \
+    apt-get -y -u dist-upgrade && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN cd /var/www/html/ampache && \
     mkdir lib/vendor lib/components && \
     chown www-data lib/vendor lib/components && \
