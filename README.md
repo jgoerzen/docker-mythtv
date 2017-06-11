@@ -41,12 +41,18 @@ FIXME
 And run with something like this:
 
     docker run -td -p 8080:80 -p 80443:443 -p 5901:5901 --stop-signal=SIGPWR \
+    --hostname=mythtv-backend \
     -v /musicdir:/music:ro \
     -v /playlistdir:/playlists:rw \
     --name=ampache jgoerzen/mythtv-backend-mysql
 
 (Omit the `-mysql` from both commands if you have a MySQL server elsewhere that you
 will connect to.)
+
+Note: it is **critical** that the hostname be specified.  MythTV uses the
+hostname as a key into its settings database, and Docker's randomly-assigned
+hostnames will cause issues in this scenario.  See
+[more about hostnames on the MythTV site](https://www.mythtv.org/wiki/Database_Backup_and_Restore#Change_the_hostname_of_a_MythTV_frontend_or_backend).
 
 # Initial Setup Background
 
@@ -69,20 +75,40 @@ with `passwd` or similar, and then use `ssh -X` to connect to it.
 Please note that SSH is an encrypted protocol, but VNC generally is not;
 it is not secure to expose the VNC port over the Internet.
 
+Either way, you will need to know how to get a shell prompt within your
+container.  If you, for instance, named it mythtv-backend, then
+`docker exec -ti mythtv-backend bash` will do the trick.
+
+As we go along, I will try to make it clear what steps you can do with
+your own Dockerfile (which will be most of them).
+
 ## jgoerzen/mythtv-backend (non-mysql) only: Prepare database
 
+The `mythtv-database` package generally wants to be installed on the database server itself.
+You may have some trickery to do here.
+
+First, let's assign a username and password.  Run:
+
+    dpkg-reconfigure -plow mythtv-common
+
+Next, if you do not already have a MythTV database,
+install the package that configures or sets up the MythTV database.
+Because it requires a database to be present to install, it is only provided by
+default in the mythtv-backend-mysql package.  This package will configure your database to an
+existing server.  Open a shell in the container and run:
+
+    apt-get update
+    rm /etc/apt/apt.conf.d/docker-clean
+    apt-get install --no-install-recommends mythtv-database
+
+It will ask for a password for the administrator account.
+It will then create the needed database.  Please note that this only needs
+to be done once; you do not need this package installed in your
+ongoing containers.
+
+https://www.mythtv.org/wiki/Database_Backup_and_Restore#Change_the_hostname_of_a_MythTV_frontend_or_backend
 
 
-Now, point a browser at http://localhost:8080/ampache and follow the
-on-screen steps, using the [Ampache install docs](https://github.com/ampache/ampache/wiki/Installation)
-as a guide.
-
-If you are using the built-in MySQL/MariaDB server, use these values:
-
- - Database name: ampache
- - MySQL hostname: localhost
- - MySQL port: blank
- - MySQL (administrative) username: ampache
  - MySQL (administrative) password: ampache
  - Create database: uncheck
 
