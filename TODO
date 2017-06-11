@@ -1,0 +1,9 @@
+
+Document how to set up for a remote database:
+
+apt-get update
+apt-get install mythtv-database
+
+setting password for mythtv user
+ssh -X to it to run setup
+
