@@ -106,7 +106,20 @@ It will then create the needed database.  Please note that this only needs
 to be done once; you do not need this package installed in your
 ongoing containers.
 
-https://www.mythtv.org/wiki/Database_Backup_and_Restore#Change_the_hostname_of_a_MythTV_frontend_or_backend
+Now you're ready to configure the backend.  Fire up the VNC server with:
+
+    su - mythtv -c startvnc
+    su - mythtv -c "DISPLAY=:1 xterm"
+
+On your workstation, a command like this should connect you to the GUI:
+
+   xvnc4viewer localhost:1
+
+In the GUI that appears, run:
+
+   mythtv-setup
+
+su - mythtv -c 'tigervncserver -kill :1'
 
 
  - MySQL (administrative) password: ampache

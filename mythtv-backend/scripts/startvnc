@@ -3,7 +3,7 @@
 echo " *** startvnc script"
 set -e
 
-exec tightvncserver -geometry 1024x768 :1
+exec tigervncserver -localhost no -geometry 1024x768 :1
 
 
 # Not using the below for now:

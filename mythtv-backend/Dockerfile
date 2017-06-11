@@ -4,7 +4,8 @@ RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 COPY setup/ /tmp/setup/
 RUN /tmp/setup/setup.sh
 RUN apt-get update && \
-      apt-get -y --no-install-recommends install mythtv-backend xmltv-util && \
+      apt-get -y --no-install-recommends install mythtv-backend xmltv-util \
+        tigervnc-standalone-server tigervnc-common && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY scripts/ /usr/local/bin/
