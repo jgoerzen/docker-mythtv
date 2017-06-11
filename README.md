@@ -2,41 +2,76 @@
 
 This image is not yet ready for use!
 
-# Ampache Music Server
+# Docker MythTV Images
 
-This is a set of images that make it simple to serve up your
-music collection with [Ampache](http://www.ampache.org).  They run on top
+This is a set of images that makes it simple to set up a basic
+headless server for [MythTV](http://www.mythtv.org).  These images
+run on top
 of my [Debian base system](http://github.com/jgoerzen/docker-debian-base),
 which provides excellent logging capabilities.
 
-This image provides the Ampache server, with full support for transcoding
-on the fly.
+MythTV is a large and complex piece of software, and will require customization.
+Some people use the MythTV backend to talk to local PCI or USB TV framegrabber/tuner
+devices.  Such use, if it is even possible under Docker, is out of scope of
+this document.  However, many TV tuners are now network-accessible, and thus
+may be used over a local LAN with a Docker container without incident.
 
-I provide two images: jgoerzen/ampache, which is designed to be used
-with an outside MySQL/MariaDB server, and jgoerzen/ampache-mysql,
-which includes an embedded MariaDB server in the image for very easy setup.
+These images, therefore, handle the installation of MythTV for you.  You will
+be responsible for the configuration to your own situation.  Please familiarize
+yourself with the information on the MythTV website before proceeding.
+
+You can view the [documentation for these images](https://github.com/jgoerzen/docker-mythtv)
+on their Github page.
+
+These images are provided:
+
+ - jgoerzen/mythtv-backend - the MythTV backend server processes
+ - jgoerzen/mythtv-backend-mysql - as mythtv-backend, but with an integrated MySQL/MariaDB server in
+   the container
+
+If you do not already have a database server on your network, selecting the
+mysql variant will simplify your installation, though it is optional.
 
 You can download with:
 
-    docker pull jgoerzen/ampache-mysql
+    docker pull jgoerzen/mythtv-backend-mysql
+
+FIXME
 
 And run with something like this:
 
-    docker run -td -p 8080:80 -p 80443:443 --stop-signal=SIGPWR \
+    docker run -td -p 8080:80 -p 80443:443 -p 5901:5901 --stop-signal=SIGPWR \
     -v /musicdir:/music:ro \
     -v /playlistdir:/playlists:rw \
-    --name=ampache jgoerzen/ampache-mysql
+    --name=ampache jgoerzen/mythtv-backend-mysql
 
 (Omit the `-mysql` from both commands if you have a MySQL server elsewhere that you
 will connect to.)
 
-This will expose your music stored at `/musicdir` on the host in read-only mode, and your playlists
-stored at `/playlistdir` in read-write mode, to the container.  You will probably also
-want to add a `-v` in some fashion covering `/var/www/html/ampache/config`, since that you will want
-to preserve those files as well.  If using the built-in MySQL, you'll also want to preserve
-`/var/lib/mysql`.
+# Initial Setup Background
 
-# Setup
+Although the MythTV backend is able to be run as a headless server, it
+nevertheless requires setup to be done via a graphical program.  This
+poses a bit of an annoyance for the normally all-text Docker environment.
+
+I have, however, provided you with two options for accessing it.
+
+Option 1 is to use VNC.  If Docker is running on localhost, or a host you
+can ssh to with port forwarding, it will expose VNC screen 1 on port 5901.
+You can connect to this with a VNC viewer and control it that way.
+
+Option 2 is to use SSH with X11 forwarding.  This is a more advanced
+option that is largely outside the scope of this document.  The basic steps
+are to add `-e DEBBASE_SSH=enabled` to your `docker run` command, forward
+port 23 into the container, provision a password for a user inside the container
+with `passwd` or similar, and then use `ssh -X` to connect to it.
+
+Please note that SSH is an encrypted protocol, but VNC generally is not;
+it is not secure to expose the VNC port over the Internet.
+
+## jgoerzen/mythtv-backend (non-mysql) only: Prepare database
+
+
 
 Now, point a browser at http://localhost:8080/ampache and follow the
 on-screen steps, using the [Ampache install docs](https://github.com/ampache/ampache/wiki/Installation)
