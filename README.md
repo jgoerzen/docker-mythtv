@@ -162,7 +162,7 @@ You can:
  - Use NAT reflection on your firewall to forward packets
    back in to your network.
  - [Bridge your Docker containers to the network](https://developer.ibm.com/recipes/tutorials/bridge-the-docker-containers-to-external-network/)
-   - An example: docker network create --driver=bridge --ip-range=192.168.0.192/29 --subnet=192.168.0.0/24 -o "com.docker.network.bridge.name=brlan1" brlan1
+   - An example: `docker network create --driver=bridge --ip-range=192.168.0.192/29 --subnet=192.168.0.0/24 --aux-address "DefaultGatewayIPv4=192.168.0.1" -o "com.docker.network.bridge.name=brlan1" brlan1`
    - After that, you can add `network=brlan1 --ip=192.168.0.193` do your `docker run`, and you do not need
      any `-p` because it will be directly accessible on the new IP.
  - Add egress iptables rules to your frontends
