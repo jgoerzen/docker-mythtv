@@ -3,6 +3,7 @@ MAINTAINER John Goerzen <jgoerzen@complete.org>
 RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 COPY setup/ /tmp/setup/
 RUN /tmp/setup/setup.sh
+# tightvncserver has qt keymap problems.  add tigervnc
 RUN apt-get update && \
       apt-get -y --no-install-recommends install mythtv-backend xmltv-util \
         tigervnc-standalone-server tigervnc-common && \
