@@ -151,6 +151,10 @@ address as seen by the backend in its database, and other
 machines use that IP to reach it.  With docker, there is generally
 no way tihs works because of NAT.
 
+Also, if you use a capture device like the HDHomeRun which communicates
+back to MythTV via random UDP ports, it can be just about impossible to
+make things work with the standard docker port forwarding.
+
 However, there are some workarounds.
 
 You can:
@@ -158,10 +162,18 @@ You can:
  - Use NAT reflection on your firewall to forward packets
    back in to your network.
  - [Bridge your Docker containers to the network](https://developer.ibm.com/recipes/tutorials/bridge-the-docker-containers-to-external-network/)
+   - An example: docker network create --driver=bridge --ip-range=192.168.0.192/29 --subnet=192.168.0.0/24 -o "com.docker.network.bridge.name=brlan1" brlan1
+   - After that, you can add `network=brlan1 --ip=192.168.0.193` do your `docker run`, and you do not need
+     any `-p` because it will be directly accessible on the new IP.
  - Add egress iptables rules to your frontends
+ - You can set the BackendServerIP and MasterServerIP to the "visible" IP
+   of the backend (will probably have to do this via mysql).  mythbackend
+   will fail to bind to a visible IP, but a userland redirector like `redir`
+   may do the trick.
 
 I tried adding `-O BackendServerIP=blah -O MasterServerIP=blah` to my
-mythfrontend command line.  That let it boot, but wasn't sufficient.
+mythfrontend command line.  That let it boot, but wasn't sufficient for
+streaming.
 
 # Bugs
 
