@@ -122,15 +122,6 @@ In the GUI that appears, run:
 su - mythtv -c 'tigervncserver -kill :1'
 
 
- - MySQL (administrative) password: ampache
- - Create database: uncheck
-
-Other suggestions:
-
- - Template configuration: ffmpeg
-
-Once configured, add a catalog pointing to `/music` at <http://localhost:8080/ampache/index.php#admin/catalog.php?action=show_add_catalog>, and another for `/playlists`.
-
 # Ports
 
 By default, this image exposes a HTTP server on port 80, HTTPS on port 443, and
