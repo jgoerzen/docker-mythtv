@@ -110,19 +110,25 @@ Now you're ready to configure the backend.  Fire up the VNC server with:
     su - mythtv -c startvnc
     su - mythtv -c "DISPLAY=:1 xterm"
 
+The first time you run `startvnc`, it will prompt you to enter a password.
+Make up something secure.
+
 On your workstation, a command like this should connect you to the GUI:
 
    xvnc4viewer localhost:1
+
+Enter the same password you set before.
 
 In the GUI that appears, run:
 
    mythtv-setup
 
-su - mythtv -c 'tigervncserver -kill :1'
-
 On the general settings page, the IP address of the backend should be set to
 the IP that OTHER systems will use to reach it.
 
+When you are all done, stop the VNC server with:
+
+    su - mythtv -c 'tigervncserver -kill :1'
 
 # Hints for your own Dockerfiles
 
