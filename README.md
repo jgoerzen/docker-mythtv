@@ -1,7 +1,5 @@
 # IMPORTANT NOTE
 
-FIXME: This image is not yet ready for use!
-
 # Docker MythTV Images
 
 This is a set of images that makes it simple to set up a basic
@@ -35,8 +33,6 @@ mysql variant will simplify your installation, though it is optional.
 You can download with:
 
     docker pull jgoerzen/mythtv-backend-mysql
-
-FIXME
 
 And run with something like this:
 
@@ -128,11 +124,6 @@ On the general settings page, the IP address of the backend should be set to
 the IP that OTHER systems will use to reach it.
 
 
-
-# Ports and IPs
-
-This image 
-
 # Hints for your own Dockerfiles
 
 Here are some files you may want to install:
@@ -154,29 +145,26 @@ Letsencrypt validation system.  HTTPS will require additional configuration.
 
 Ampache is exposed at path `/ampache` on the configured system. 
 
+# Bugs
+
+mythbackend doesn't seem to properly write its PID to /var/run/mythtv, and
+therefore commands that try to kill it won't work.
+
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
-can be found at https://github.com/jgoerzen/docker-ampache
+can be found at https://github.com/jgoerzen/docker-mythtv
 
 # Security Status
 
 The Debian operating system is configured to automatically apply security patches.
-Ampache, however, does not have such a feature, nor do most of the third-party
-PHP modules it integrates.
-
-There is some security risk in making the installation directory writable by
-the web server process.  This is restricted as much as possible in this image.
-A side-effect of that, however, is the disabling of the Ampache auto-update
-feature.  If you wish to be able to use Ampache's built-in updates, you
-should `chown -R www-data:www-data /var/www/html/ampache`.
+MythTV, however, does not have such a feature.
 
 # Tags
 
-These Docker tags are defined:
-
- - latest is built against the Ampache github master branch (which they recommend)
- - Other branches use the versioned tarballs
+Because this is built from the deb-multimedia.org sources, I cannot easily
+provide historical builds, since deb-multimedia itself does not.  Threfore,
+only current deb-multimedia.org builds are available.
 
 # Copyright
 
