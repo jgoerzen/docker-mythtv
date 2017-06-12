@@ -1,6 +1,6 @@
 # IMPORTANT NOTE
 
-This image is not yet ready for use!
+FIXME: This image is not yet ready for use!
 
 # Docker MythTV Images
 
@@ -121,8 +121,9 @@ In the GUI that appears, run:
 
 su - mythtv -c 'tigervncserver -kill :1'
 
+# Ports and IPs
 
-# Ports
+This image 
 
 By default, this image exposes a HTTP server on port 80, HTTPS on port 443, and
 also exposes port 81 in case you wish to use it separately for certbot or another

@@ -15,7 +15,6 @@ RUN mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled
 # Send log to syslog
 RUN echo 'EXTRA_ARGS="--syslog local7 --verbose"' >> /etc/default/mythtv-backend
 
-EXPOSE 6554 6543 6544 6549
-VOLUME ["/var/www/html/ampache/config"]
+EXPOSE 6554 6543 6544 6549 5901
 CMD ["/usr/local/bin/boot-debian-base"]
 

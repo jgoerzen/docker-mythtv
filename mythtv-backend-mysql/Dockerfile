@@ -25,6 +25,6 @@ RUN /etc/init.d/mysql start && \
     /etc/init.d/mysql stop
 RUN /usr/local/bin/docker-wipelogs
 
-EXPOSE 80 443 81
+EXPOSE 6554 6543 6544 6549 5901                                                                        
 CMD ["/usr/local/bin/boot-debian-base"]
 
