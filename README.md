@@ -125,6 +125,21 @@ su - mythtv -c 'tigervncserver -kill :1'
 
 This image 
 
+# Hints for your own Dockerfiles
+
+Here are some files you may want to install:
+
+ - ~mythtv/.mythtv/config.xml (/var/lib/mythtv)
+ - /etc/mythtv/config.xml
+
+You could prime the Debconf database with the MythTV passwords with:
+
+    echo 'mythtv-common mythtv/mysql_mythtv_password password foo' | debconf-set-selections
+    echo 'mythtv-common mythtv/mysql_mythtv_user string mythtv' | debconf-set-selections
+    echo 'mythtv-common mythtv/mysql_mythtv_dbname string mythconverg' | debconf-set-selections
+    echo 'mythtv-common mythtv/mysql_host string localhost' | debconf-set-selections
+    dpkg-reconfigure mythtv-common
+
 By default, this image exposes a HTTP server on port 80, HTTPS on port 443, and
 also exposes port 81 in case you wish to use it separately for certbot or another
 Letsencrypt validation system.  HTTPS will require additional configuration.
