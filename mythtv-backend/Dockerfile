@@ -12,6 +12,8 @@ RUN apt-get update && \
 COPY scripts/ /usr/local/bin/
 RUN /usr/local/bin/docker-wipelogs
 RUN mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled
+# Send log to syslog
+RUN echo 'EXTRA_ARGS="--syslog local7 --verbose"' >> /etc/default/mythtv-backend
 
 EXPOSE 80 443 81
 VOLUME ["/var/www/html/ampache/config"]
