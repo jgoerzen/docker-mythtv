@@ -137,7 +137,6 @@ You could prime the Debconf database with the MythTV passwords with:
     echo 'mythtv-common mythtv/mysql_mythtv_user string mythtv' | debconf-set-selections
     echo 'mythtv-common mythtv/mysql_mythtv_dbname string mythconverg' | debconf-set-selections
     echo 'mythtv-common mythtv/mysql_host string localhost' | debconf-set-selections
-    dpkg-reconfigure mythtv-common
 
 By default, this image exposes a HTTP server on port 80, HTTPS on port 443, and
 also exposes port 81 in case you wish to use it separately for certbot or another
