@@ -8,10 +8,16 @@ RUN apt-get update && \
       apt-get -y --no-install-recommends install mythtv-backend xmltv-util \
         tigervnc-standalone-server tigervnc-common && \
     apt-get -y -u dist-upgrade && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*  /var/tmp/*
 COPY scripts/ /usr/local/bin/
-RUN /usr/local/bin/docker-wipelogs
-RUN mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled
+RUN /usr/local/bin/docker-wipelogs && \
+    mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled && \
+    mkdir -p /var/lib/mythtv/.mythtv/3rdParty && \
+    cd /var/lib/mythtv/.mythtv/3rdParty && \
+    unzip /tmp/setup/jwplayer.zip && \
+    rm -fr /tmp/* && \
+    chown -R mythtv:mythtv /var/lib/mythtv/.mythtv && \
+    chmod 0755 /var/lib/mythtv/.mythtv /var/lib/mythtv/.mythtv/3rdParty
 # Send log to syslog
 RUN echo 'EXTRA_ARGS="--syslog local7 --verbose"' >> /etc/default/mythtv-backend
 
