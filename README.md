@@ -40,7 +40,8 @@ FIXME
 
 And run with something like this:
 
-    docker run -td -p 8080:80 -p 80443:443 -p 5901:5901 --stop-signal=SIGPWR \
+    docker run -td -p 6554:6554 -p 6543:6543 -p 6544:6544 -p 6549:6549 -p 5901:5901 \
+    --stop-signal=SIGPWR \
     --hostname=mythtv-backend \
     -v /musicdir:/music:ro \
     -v /playlistdir:/playlists:rw \
@@ -106,6 +107,8 @@ It will then create the needed database.  Please note that this only needs
 to be done once; you do not need this package installed in your
 ongoing containers.
 
+## All setups: configure the backend
+
 Now you're ready to configure the backend.  Fire up the VNC server with:
 
     su - mythtv -c startvnc
@@ -120,6 +123,11 @@ In the GUI that appears, run:
    mythtv-setup
 
 su - mythtv -c 'tigervncserver -kill :1'
+
+On the general settings page, the IP address of the backend should be set to
+the IP that OTHER systems will use to reach it.
+
+
 
 # Ports and IPs
 
