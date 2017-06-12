@@ -41,7 +41,7 @@ And run with something like this:
     --hostname=mythtv-backend \
     -v /musicdir:/music:ro \
     -v /playlistdir:/playlists:rw \
-    --name=ampache jgoerzen/mythtv-backend-mysql
+    --name=mythtv jgoerzen/mythtv-backend-mysql
 
 (Omit the `-mysql` from both commands if you have a MySQL server elsewhere that you
 will connect to.)
@@ -124,7 +124,7 @@ In the GUI that appears, run:
    mythtv-setup
 
 On the general settings page, the IP address of the backend should be set to
-the IP that OTHER systems will use to reach it.
+the interal IP address (more on that below).
 
 When you are all done, stop the VNC server with:
 
@@ -144,11 +144,24 @@ You could prime the Debconf database with the MythTV passwords with:
     echo 'mythtv-common mythtv/mysql_mythtv_dbname string mythconverg' | debconf-set-selections
     echo 'mythtv-common mythtv/mysql_host string localhost' | debconf-set-selections
 
-By default, this image exposes a HTTP server on port 80, HTTPS on port 443, and
-also exposes port 81 in case you wish to use it separately for certbot or another
-Letsencrypt validation system.  HTTPS will require additional configuration.
+# IP address notes
 
-Ampache is exposed at path `/ampache` on the configured system. 
+So this is pretty annoying.  MythTV insists on storing the IP
+address as seen by the backend in its database, and other
+machines use that IP to reach it.  With docker, there is generally
+no way tihs works because of NAT.
+
+However, there are some workarounds.
+
+You can:
+
+ - Use NAT reflection on your firewall to forward packets
+   back in to your network.
+ - [Bridge your Docker containers to the network](https://developer.ibm.com/recipes/tutorials/bridge-the-docker-containers-to-external-network/)
+ - Add egress iptables rules to your frontends
+
+I tried adding `-O BackendServerIP=blah -O MasterServerIP=blah` to my
+mythfrontend command line.  That let it boot, but wasn't sufficient.
 
 # Bugs
 
