@@ -6,7 +6,7 @@ RUN /tmp/setup/setup.sh
 RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d && \
     apt-get update && \
       apt-get -y --no-install-recommends install mythtv-backend=0.28.2-dmo1+deb9u1 xmltv-util \
-        tigervnc-standalone-server tigervnc-common iputils-ping && \
+        tigervnc-standalone-server tigervnc-common && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/*  /var/tmp/*
 COPY scripts/ /usr/local/bin/
