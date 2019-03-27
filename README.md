@@ -1,12 +1,11 @@
-# IMPORTANT NOTE
-
 # Docker MythTV Images
 
 This is a set of images that makes it simple to set up a basic
 headless server for [MythTV](http://www.mythtv.org).  These images
 run on top
 of my [Debian base system](http://github.com/jgoerzen/docker-debian-base),
-which provides excellent logging capabilities.
+which provides excellent logging capabilities.  This image is part of the
+[docker-mythtv](https://github.com/jgoerzen/docker-mythtv) image set.
 
 MythTV is a large and complex piece of software, and will require customization.
 Some people use the MythTV backend to talk to local PCI or USB TV framegrabber/tuner
@@ -23,8 +22,8 @@ on their Github page.
 
 These images are provided:
 
- - jgoerzen/mythtv-backend - the MythTV backend server processes
- - jgoerzen/mythtv-backend-mysql - as mythtv-backend, but with an integrated MySQL/MariaDB server in
+ - [jgoerzen/mythtv-backend](https://github.com/jgoerzen/docker-mythtv-backend) - the MythTV backend server processes
+ - [jgoerzen/mythtv-backend-mysql](https://github.com/jgoerzen/docker-mythtv-backend-mysql) - as mythtv-backend, but with an integrated MySQL/MariaDB server in
    the container
 
 If you do not already have a database server on your network, selecting the
