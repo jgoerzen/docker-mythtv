@@ -1,0 +1,25 @@
+docker-build-master:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - umask 0022
+    - apk add git
+    - apk add curl
+    - git submodule init
+    - git submodule update
+    - chmod -R og-w .
+    - cd proxied-app-apache && docker build -t jgoerzen/proxied-app-apache .
+    - cd ../reverse-proxy-apache && docker build -t jgoerzen/reverse-proxy-apache .
+    - docker tag jgoerzen/proxied-app-apache jgoerzen/proxied-app-apache:bullseye
+    - docker tag jgoerzen/reverse-proxy-apache jgoerzen/reverse-proxy-apache:bullseye
+    - docker push jgoerzen/proxied-app-apache
+    - docker push jgoerzen/proxied-app-apache:bullseye
+    - docker push jgoerzen/reverse-proxy-apache
+    - docker push jgoerzen/reverse-proxy-apache:bullseye
+  only:
+    - master
