@@ -1,5 +1,7 @@
 # Docker MythTV Images
 
+**This repository is no longer hosted at Github; see its [new homepage on Salsa](https://salsa.debian.org/jgoerzen/docker-mythtv].**
+
 This is a set of images that makes it simple to set up a basic
 headless server for [MythTV](http://www.mythtv.org).  These images
 run on top
