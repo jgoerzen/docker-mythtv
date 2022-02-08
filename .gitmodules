@@ -1,8 +1,8 @@
 [submodule "mythtv-backend"]
 	path = mythtv-backend
-	url = git@github.com:jgoerzen/docker-mythtv-backend.git
+	url = https://salsa.debian.org/jgoerzen/docker-mythtv-backend.git
 	branch = .
 [submodule "mythtv-backend-mysql"]
 	path = mythtv-backend-mysql
-	url = git@github.com:jgoerzen/docker-mythtv-backend-mysql.git
+	url = https://salsa.debian.org/jgoerzen/docker-mythtv-backend-mysql.git
 	branch = .
