@@ -3,9 +3,9 @@
 This is a set of images that makes it simple to set up a basic
 headless server for [MythTV](http://www.mythtv.org).  These images
 run on top
-of my [Debian base system](http://github.com/jgoerzen/docker-debian-base),
+of my [Debian base system](http://salsa.debian.org/jgoerzen/docker-debian-base),
 which provides excellent logging capabilities.  This image is part of the
-[docker-mythtv](https://github.com/jgoerzen/docker-mythtv) image set.
+[docker-mythtv](https://salsa.debian.org/jgoerzen/docker-mythtv) image set.
 
 MythTV is a large and complex piece of software, and will require customization.
 Some people use the MythTV backend to talk to local PCI or USB TV framegrabber/tuner
@@ -17,13 +17,13 @@ These images, therefore, handle the installation of MythTV for you.  You will
 be responsible for the configuration to your own situation.  Please familiarize
 yourself with the information on the MythTV website before proceeding.
 
-You can view the [documentation for these images](https://github.com/jgoerzen/docker-mythtv)
+You can view the [documentation for these images](https://salsa.debian.org/jgoerzen/docker-mythtv)
 on their Github page.
 
 These images are provided:
 
- - [jgoerzen/mythtv-backend](https://github.com/jgoerzen/docker-mythtv-backend) - the MythTV backend server processes
- - [jgoerzen/mythtv-backend-mysql](https://github.com/jgoerzen/docker-mythtv-backend-mysql) - as mythtv-backend, but with an integrated MySQL/MariaDB server in
+ - [jgoerzen/mythtv-backend](https://salsa.debian.org/jgoerzen/docker-mythtv-backend) - the MythTV backend server processes
+ - [jgoerzen/mythtv-backend-mysql](https://salsa.debian.org/jgoerzen/docker-mythtv-backend-mysql) - as mythtv-backend, but with an integrated MySQL/MariaDB server in
    the container
 
 If you do not already have a database server on your network, selecting the
@@ -40,6 +40,17 @@ And run with something like this:
     --hostname=mythtv-backend \
     -v /musicdir:/music:ro \
     -v /playlistdir:/playlists:rw \
+    --name=mythtv jgoerzen/mythtv-backend-mysql
+
+On a newer host, like Debian bullseye, use this instead:
+
+    docker run -td -p 6554:6554 -p 6543:6543 -p 6544:6544 -p 6549:6549 -p 5901:5901 \
+    --stop-signal=SIGRTMIN+3 \
+    --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
+    --hostname=mythtv-backend \
+    -v /musicdir:/music:ro \
+    -v /playlistdir:/playlists:rw \
+    -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host \
     --name=mythtv jgoerzen/mythtv-backend-mysql
 
 (Omit the `-mysql` from both commands if you have a MySQL server elsewhere that you
@@ -182,7 +193,7 @@ therefore commands that try to kill it won't work.
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
-can be found at https://github.com/jgoerzen/docker-mythtv
+can be found at https://salsa.debian.org/jgoerzen/docker-mythtv
 
 # Security Status
 
@@ -198,7 +209,7 @@ only current deb-multimedia.org builds are available.
 # Copyright
 
 Docker scripts, etc. are
-Copyright (c) 2017 John Goerzen
+Copyright (c) 2017-2022 John Goerzen
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
