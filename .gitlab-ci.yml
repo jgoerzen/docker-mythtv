@@ -20,8 +20,8 @@ docker-build-master:
     - docker tag jgoerzen/mythtv-backend jgoerzen/mythtv-backend:31.0
     - docker tag jgoerzen/mythtv-backend-mysql jgoerzen/mythtv-backend-mysql:31.0
     - docker push jgoerzen/mythtv-backend
-    - docker push jgoerzen/mythtv-backend:31.0
+    - docker push jgoerzen/mythtv-backend:33.1
     - docker push jgoerzen/mythtv-backend-mysql
-    - docker push jgoerzen/mythtv-backend-mysql:31.0
+    - docker push jgoerzen/mythtv-backend-mysql:33.1
   only:
     - master
