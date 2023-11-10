@@ -17,8 +17,8 @@ docker-build-master:
     - ./buildall
     - cd proxied-app-apache && docker build -t jgoerzen/proxied-app-apache .
     - cd ../reverse-proxy-apache && docker build -t jgoerzen/reverse-proxy-apache .
-    - docker tag jgoerzen/mythtv-backend jgoerzen/mythtv-backend:31.0
-    - docker tag jgoerzen/mythtv-backend-mysql jgoerzen/mythtv-backend-mysql:31.0
+    - docker tag jgoerzen/mythtv-backend jgoerzen/mythtv-backend:33.1
+    - docker tag jgoerzen/mythtv-backend-mysql jgoerzen/mythtv-backend-mysql:33.1
     - docker push jgoerzen/mythtv-backend
     - docker push jgoerzen/mythtv-backend:33.1
     - docker push jgoerzen/mythtv-backend-mysql
